@@ -1,13 +1,13 @@
 package in.greyw.expensetrackerapi.Service;
 
 import in.greyw.expensetrackerapi.Entity.Expense;
+import in.greyw.expensetrackerapi.Exceptions.ResourceNotFoundException;
 import in.greyw.expensetrackerapi.Repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +29,7 @@ public class ExpenseServiceImpl implements ExpenseService {
        if (expense.isPresent()) {
            return expense.get();
        }
-       throw new RuntimeException("No expense found with id " + id);
+       throw new ResourceNotFoundException("No expense found with id " + id);
     }
 
     @Override
