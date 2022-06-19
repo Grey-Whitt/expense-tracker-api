@@ -14,7 +14,7 @@ public interface ExpenseService {
 
     Expense getExpenseById(Long id);
 
-    String deleteExpenseById(Long id);
+    void deleteExpenseById(Long id);
 
     Expense saveExpenseDetails(Expense expense);
 
