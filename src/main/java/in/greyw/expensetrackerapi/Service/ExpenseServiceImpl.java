@@ -18,19 +18,23 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Autowired
     private ExpenseRepository expenseRepo;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public Page<Expense> getAllExpenses(Pageable page) {
 
-        return expenseRepo.findAll(page);
+        return expenseRepo.findByUserId(userService.getLoggedInUser().getId(), page);
     }
 
     @Override
     public Expense getExpenseById(Long id) {
-       Optional<Expense> expense = expenseRepo.findById(id);
+       Optional<Expense> expense = expenseRepo.findByUserIdAndId(userService.getLoggedInUser().getId(), id);
 
        if (expense.isPresent()) {
            return expense.get();
        }
+
        throw new ResourceNotFoundException("No expense found with id " + id);
     }
 
@@ -44,6 +48,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense saveExpenseDetails(Expense expense) {
+        expense.setUser(userService.getLoggedInUser());
         return expenseRepo.save(expense);
     }
 

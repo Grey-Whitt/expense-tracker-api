@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.Optional;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
@@ -19,4 +20,8 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     // SELECT * FROM tbl_expenses WHERE date BETWEEN 'startDate' AND 'endDate'
     Page<Expense> findByDateBetween(Date startDate, Date endDate, Pageable page);
+
+    Page<Expense> findByUserId(Long userId, Pageable page);
+
+    Optional<Expense> findByUserIdAndId(Long userId, Long expenseId);
 }
